@@ -30,7 +30,7 @@ describe('BooksController', () => {
           expect(book).toHaveProperty('publication_date');
         });
       });
-      
+
     it('should return the correct book by id', () => {
       const book = booksController.getBookById(1);
       expect(book.id).toBe(1);
@@ -79,7 +79,26 @@ describe('BooksController', () => {
         expect(book.publication_date).toMatch(/^2011/);  
       });
     });
-  });
+
+    it('should filter books by publication year fully', async () => {
+        const params: GetAllBooksDto = { date: '2011-06-01' };
+        const booksFound = await booksController.getBooks(params);
+        expect(booksFound.length).toBe(1);
+        booksFound.forEach((book) => {
+          expect(book.publication_date).toBe("2011-06-01");  
+        });
+      });
 
 
+      it('should filter books by category and price', async () => {
+        const params: GetAllBooksDto = { date: '2011-06-01', category:'Java' };
+        const booksFound = await booksController.getBooks(params);
+   
+        expect(booksFound.length).toBe(1);
+        booksFound.forEach( (book)=>{
+           expect(book.category).toBe('Java')
+           expect(book.publication_date).toBe('2011-06-01')
+        })}
+)});
 });
+
