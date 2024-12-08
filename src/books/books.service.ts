@@ -6,10 +6,14 @@ import { GetAllBooksDto } from "./interfaces/dtos/get-all-books.dto";
 
 @Injectable()
 export class BooksService {
-
+// to do: refactor the code later maybe use a switch case or a generic function
     books: Book[] = booksData;
     getAllBooks(params?:GetAllBooksDto): Book[]{
         let filteredBooks :Book[] = booksData;
+
+        if(!params){
+            return filteredBooks;
+        }
 
         if(params.price){
              filteredBooks = this.books.filter(book => book.price === Number(params.price))
@@ -48,4 +52,6 @@ export class BooksService {
     getBookById(id:number): Book{
         return this.books.find(book => book.id === id);
     }
+
+   
 }
