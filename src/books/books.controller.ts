@@ -1,5 +1,5 @@
 import { BooksService } from './books.service';
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
 
 @Controller('/books')
 export class BooksController{
@@ -10,9 +10,9 @@ export class BooksController{
         return this._booksService.getAllUsers();
     }
 
-    @Get(':id')
-    getBookById(){
-        return 'Got one book by id'
+    @Get('/:id')
+    getBookById(@Param('id', ParseIntPipe) bookId:number ):any  {
+        return this._booksService.getUserById(bookId);
     }
 
 }
