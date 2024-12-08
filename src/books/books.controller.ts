@@ -8,7 +8,7 @@ export class BooksController{
     constructor(private readonly _booksService:BooksService){}
 
     @Get()
-    getBooks(@Query() params: GetAllBooksDto) : Book[]{
+    getBooks(@Query() params?: GetAllBooksDto) : Book[]{
         return this._booksService.getAllBooks(params);
     }
 

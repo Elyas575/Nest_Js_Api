@@ -1,6 +1,6 @@
 
 import { Injectable, Query } from "@nestjs/common";
-import { booksData } from "src/dummydata/books";
+import { booksData } from "../dummydata/books";
 import { Book } from "./interfaces/books.interface";
 import { GetAllBooksDto } from "./interfaces/dtos/get-all-books.dto";
 
