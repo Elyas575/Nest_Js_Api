@@ -14,7 +14,7 @@ export class BooksService {
 
     // to do make an interface of type USER and make it the return type
     getUserById(id:number){
-        return this.users.find(user => user.id = id);
+        return this.users.find(user => user.id === id);
     }
 
 }
