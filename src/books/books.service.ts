@@ -21,7 +21,6 @@ export class BooksService {
         }
 
         if(params.date){
-            console.log(params.date)
             if(params.date.length === 4){
              // Extract the year from the params.date
             filteredBooks = filteredBooks.filter(book => {
@@ -30,7 +29,7 @@ export class BooksService {
                 return bookYear === params.date;
              });
             } 
-            
+
             else {
                 filteredBooks = filteredBooks.filter(book => book.publication_date == params.date);
             }
