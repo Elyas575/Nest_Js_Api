@@ -6,8 +6,8 @@ export class BooksController{
     constructor(private readonly _booksService:BooksService){}
 
     @Get()
-    getAllBooks(@Query('price',ParseIntPipe) price:number){
-        return this._booksService.getAllBooks(price);
+    getAllBooks(@Query() params:any){
+        return this._booksService.getAllBooks(params);
     }
 
     @Get('/:id')
