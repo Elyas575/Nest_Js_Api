@@ -7,12 +7,12 @@ export class BooksController{
 
     @Get()
     getAllBooks(){
-        return this._booksService.getAllUsers();
+        return this._booksService.getAllBooks();
     }
 
     @Get('/:id')
     getBookById(@Param('id', ParseIntPipe) bookId:number ):any  {
-        return this._booksService.getUserById(bookId);
+        return this._booksService.getBookById(bookId);
     }
 
 }

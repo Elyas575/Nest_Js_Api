@@ -1,20 +1,17 @@
 
-import { Injectable } from "@nestjs/common";
+import { Injectable, Query } from "@nestjs/common";
 import { booksData } from "src/dummydata/books";
+import { Book } from "./interfaces/books.interface";
 
 @Injectable()
 export class BooksService {
 
-    users: any[] = booksData;
-
-    // to do make an interface of type USER and make it the return type
-    getAllUsers(): any{
-        return this.users;
+    books: Book[] = booksData;
+    getAllBooks(@Query('price') price?:number): Book[]{
+        return this.books;
     }
 
-    // to do make an interface of type USER and make it the return type
-    getUserById(id:number){
-        return this.users.find(user => user.id === id);
+    getBookById(id:number): Book{
+        return this.books.find(book => book.id === id);
     }
-
 }
