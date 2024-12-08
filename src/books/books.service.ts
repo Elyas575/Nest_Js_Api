@@ -7,18 +7,36 @@ import { Book } from "./interfaces/books.interface";
 export class BooksService {
 
     books: Book[] = booksData;
-    filteredBooks :Book[];
+    
+
     getAllBooks(params?:any): Book[]{
+        let filteredBooks :Book[] = booksData;
 
         if(params.price){
-             this.filteredBooks = this.books.filter(book => book.price == params.price)
+             filteredBooks = this.books.filter(book => book.price === Number(params.price))
         }
 
         if(params.category){
-            this.filteredBooks =this.books.filter(book=> book.category == params.category)
+            filteredBooks = filteredBooks.filter(book => book.category.toLowerCase() === params.category.toLowerCase())
         }
 
-        return this.filteredBooks;
+        if(params.date){
+            console.log(params.date)
+            if(params.date.length === 4){
+             // Extract the year from the params.date
+            filteredBooks = filteredBooks.filter(book => {
+                // Extract year from the book's publicationDate
+                const bookYear = book.publication_date.slice(0, 4);
+                return bookYear === params.date;
+             });
+            } 
+            
+            else {
+                filteredBooks = filteredBooks.filter(book => book.publication_date == params.date);
+            }
+        } 
+
+        return filteredBooks;
     }
 
     getBookById(id:number): Book{
