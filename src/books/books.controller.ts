@@ -1,13 +1,13 @@
 import { BooksService } from './books.service';
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
 
 @Controller('/books')
 export class BooksController{
     constructor(private readonly _booksService:BooksService){}
 
     @Get()
-    getAllBooks(){
-        return this._booksService.getAllBooks();
+    getAllBooks(@Query('price',ParseIntPipe) price:number){
+        return this._booksService.getAllBooks(price);
     }
 
     @Get('/:id')

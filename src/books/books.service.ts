@@ -7,7 +7,12 @@ import { Book } from "./interfaces/books.interface";
 export class BooksService {
 
     books: Book[] = booksData;
-    getAllBooks(@Query('price') price?:number): Book[]{
+    getAllBooks(price?:number): Book[]{
+        console.log(price)
+        if(price){
+            return this.books.filter(book => book.price === price)
+        }
+
         return this.books;
     }
 
