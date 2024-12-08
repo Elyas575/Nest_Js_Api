@@ -7,19 +7,18 @@ import { Book } from "./interfaces/books.interface";
 export class BooksService {
 
     books: Book[] = booksData;
+    filteredBooks :Book[];
     getAllBooks(params?:any): Book[]{
-        console.log(params)
+
         if(params.price){
-            return this.books.filter(book => book.price === params.price)
+             this.filteredBooks = this.books.filter(book => book.price == params.price)
         }
 
         if(params.category){
-            return this.books.filter(books=> books.category === params.category)
+            this.filteredBooks =this.books.filter(book=> book.category == params.category)
         }
 
-        
-
-        return this.books;
+        return this.filteredBooks;
     }
 
     getBookById(id:number): Book{
