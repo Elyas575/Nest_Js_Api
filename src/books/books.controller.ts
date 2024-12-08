@@ -1,12 +1,13 @@
+import { BooksService } from './books.service';
 import { Controller, Get } from "@nestjs/common";
 
 @Controller('/books')
 export class BooksController{
-    constructor(){}
+    constructor(private readonly _booksService:BooksService){}
 
     @Get()
     getAllBooks(){
-        return 'getting all books';
+        return this._booksService.getAllUsers();
     }
 
     @Get(':id')
