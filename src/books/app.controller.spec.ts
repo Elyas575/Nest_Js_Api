@@ -19,7 +19,7 @@ describe('BooksController', () => {
 
   describe('root', () => {
 
-    it('should return the correct book', () => {
+    it('should return the correct book by id', () => {
       expect(booksController.getBookById(1)).toStrictEqual({
         author: "Joshua Bloch",
         category: "Java",
@@ -49,6 +49,17 @@ describe('BooksController', () => {
         expect(booksFound).toEqual(result)
         expect(booksFound.length).toBe(4);  
         expect(booksFound[0].price).toBe(40);
+      });
+
+      it('should filter books by author', async () => {
+        const params: GetAllBooksDto = { author: 'Joshua Bloch' };
+        const result: Book[] = [
+          { id: 1, title: 'Effective Java', author: 'Joshua Bloch', category: 'Java', price: 40, publication_date: '2008-05-28' },
+        ];
+  
+        const booksFound = await booksController.getBooks(params);
+        expect(booksFound.length).toBe(1);  // Should return only the book by Joshua Bloch
+        expect(booksFound[0].author).toEqual("Joshua Bloch")
       });
 
 
