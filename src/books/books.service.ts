@@ -2,7 +2,7 @@
 import { Injectable, Query } from "@nestjs/common";
 import { booksData } from "../dummydata/books";
 import { Book } from "./interfaces/books.interface";
-import { GetAllBooksParamsDto } from "./dtos/get-all-books.dto";
+import { GetAllBooksParamsDto } from "./dtos/get-all-books-params.dto";
 
 @Injectable()
 export class BooksService {

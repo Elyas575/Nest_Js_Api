@@ -12,8 +12,8 @@ export class GetAllBooksParamsDto {
     author?: string;   
 
     @IsOptional()
-    @IsNumber({}, { message: 'price must be of number type' })  
-    @Transform(({ value }) => value ? Number(value) : value) // ensures the param is a number, transforms it from string to number
+    @IsNumber({}, { message: " 'price' query must be of number type or it should not be included."})  
+    @Transform(({ value }) => value ? Number(value) : value) // ensures the param is a number, transforms it from it's default type form to number
     price?: number;    
 
     @IsOptional()
