@@ -1,12 +1,12 @@
 
-import { Injectable, Query } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { booksData } from "../dummydata/books";
 import { Book } from "./interfaces/book.interface";
 import { GetAllBooksParamsDto } from "./dtos/get-all-books-params.dto";
 import { IBookService } from "./interfaces/books.service.interface";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { BookSchema } from "src/models/Books.Schema";
+import { BookSchema } from "../models/Books.Schema";
 import { GetBookDto } from "./dtos/get-book.dto";
 import {mapMongoDbBookToGetBookDto} from './helpers/mongodb-book-converter'
 

@@ -1,4 +1,4 @@
-import { GetBookDto } from "src/books/dtos/get-book.dto";
+import { GetBookDto } from "../dtos/get-book.dto";
 
 export function mapMongoDbBookToGetBookDto(bookFound: any): GetBookDto {
     const bookToReturn = new GetBookDto();
