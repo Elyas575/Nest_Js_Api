@@ -24,7 +24,8 @@ export class BooksService implements IBookService {
     }
 
     getBooks(){
-        return this.bookModel.find();
+        const booksFound = this.bookModel.find();
+        return mapMongoDbBookToGetBookDto(booksFound)
     }
       /**
          * Retrieves a list of books, optionally filtered by query parameters.
@@ -36,11 +37,6 @@ export class BooksService implements IBookService {
       async getAllBooks(params?: GetAllBooksParamsDto): Promise<GetBookDto[]> {
         // Resolve the query to an array using `await`
         let filteredBooks: any = await this.bookModel.find();  // This now returns an array of books
-
-        // If no parameters are provided, return the full list
-        if (!params) {
-            return filteredBooks;
-        }
 
         // Filter by price if specified in the query parameters
         if (params?.price) {
