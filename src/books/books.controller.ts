@@ -1,7 +1,7 @@
 import { BooksService } from './books.service';
 import { Controller, Get, Param, ParseIntPipe, Query, NotFoundException, UsePipes, ValidationPipe } from "@nestjs/common";
 import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
-import { Book } from './interfaces/books.interface';
+import { Book } from './interfaces/book.interface';
 
 @Controller('/books')
 @UsePipes(new ValidationPipe({ transform: true, whitelist: true })) // Apply ValidationPipe here
