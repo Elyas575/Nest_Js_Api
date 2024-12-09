@@ -51,6 +51,7 @@ export class BooksService {
 
     getBookById(id:number): Book{
         return this.books.find(book => book.id === id);
+        
     }
 
    
