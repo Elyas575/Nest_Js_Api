@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class GetAllBooksParamsDto {
 
@@ -12,7 +12,7 @@ export class GetAllBooksParamsDto {
     author?: string;   
 
     @IsOptional()
-    @IsInt()     
+    @IsNumber({}, { message: 'price must be of number type' })  
     @Transform(({ value }) => value ? Number(value) : value) // ensures the param is a number, transforms it from string to number
     price?: number;    
 
