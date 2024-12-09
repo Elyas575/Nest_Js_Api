@@ -3,12 +3,21 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BooksController } from './books.controller'; 
 import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
 import { Book } from './interfaces/book.interface';
+import { MongooseModule } from '@nestjs/mongoose';
+import { BookSchema, schema } from '../models/Books.Schema';
+import mongoose from 'mongoose';
 
 describe('BooksController', () => {
   let booksController: BooksController;
+  let connectionString = "mongodb+srv://elyas575:Test123@cluster0.kdwmw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
+      imports: [
+        MongooseModule.forRoot(connectionString), 
+        MongooseModule.forFeature([{ name: BookSchema.name, schema: schema }]), 
+      ],
       controllers: [BooksController],
       providers: [BooksService],
     }).compile();
@@ -17,8 +26,8 @@ describe('BooksController', () => {
   });
 
   describe('root', () => {
-    it('should return all 12 books and their properties', () => {
-        const booksFound = booksController.getBooks();
+    it('should return all 12 books and their properties', async () => {
+        const booksFound = await booksController.getBooks();
         expect(booksFound).toBeInstanceOf(Array);
         expect(booksFound.length).toBe(12);
         booksFound.forEach((book) => {
@@ -31,8 +40,8 @@ describe('BooksController', () => {
         });
       });
 
-    it('should return the correct book by id', () => {
-      const book = booksController.getBookById(1);
+    it('should return the correct book by id', async () => {
+      const book = await booksController.getBookById(1);
       expect(book.id).toBe(1);
       expect(book.title).toBe('Effective Java');
       expect(book.author).toBe('Joshua Bloch');
@@ -101,4 +110,3 @@ describe('BooksController', () => {
         })}
 )});
 });
-

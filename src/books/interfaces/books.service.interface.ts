@@ -1,7 +1,7 @@
 import { GetAllBooksParamsDto } from "../dtos/get-all-books-params.dto";
-import { Book } from "./book.interface";
+import { GetBookDto } from "../dtos/get-book.dto";
 
 export interface IBookService {
-    getAllBooks(params?: GetAllBooksParamsDto): Book[];
-    getBookById(id: number): Book;
+    getAllBooks(params?: GetAllBooksParamsDto): Promise<GetBookDto[]>;
+    getBookById(id: number): Promise<GetBookDto>;
   }

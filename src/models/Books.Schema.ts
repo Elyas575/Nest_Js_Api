@@ -1,7 +1,7 @@
 import { Schema,Prop, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema()
-export class Book {
+export class BookSchema {
     @Prop({unique:true, required:true})
     id: number;
 
@@ -21,4 +21,4 @@ export class Book {
     publication_date: string;
 }
 
-export const bookSchema = SchemaFactory.createForClass(Book)
+export const schema = SchemaFactory.createForClass(BookSchema)

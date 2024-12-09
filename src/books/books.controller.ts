@@ -1,37 +1,45 @@
 import { BooksService } from './books.service';
-import { Controller, Get, Param, ParseIntPipe, Query, NotFoundException, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Controller, Get,Post, Param, ParseIntPipe, Query, NotFoundException, UsePipes, ValidationPipe, Body } from "@nestjs/common";
 import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
 import { Book } from './interfaces/book.interface';
+import { CreateBookDto } from './dtos/create-book.dto';
+import { GetBookDto } from './dtos/get-book.dto';
 
 @Controller('/books')
 @UsePipes(new ValidationPipe({ transform: true, whitelist: true })) // Apply ValidationPipe here
 
 export class BooksController{
     constructor(private readonly _booksService:BooksService){}
-      /**
+        /**
+         * Route to get all books
+         * returns An array of all the books
+         */
+    @Get('/')
+    async getAllBooksFromDb(){
+        return await this._booksService.getBooks();
+    }
+         /**
          * Route to search for books based on query parameters.
          * The query parameters (title, author, price, category, publication date.) are validated then passed to the BooksService to fetch the books
          * @param params - the optional query parameters for filtering the books
          * returns An array of books matching the search criteria
       */
     @Get('/search')
-    getBooks(@Query() params?: GetAllBooksParamsDto) : Book[]{
-        const booksToFind  = this._booksService.getAllBooks(params);
+    async getBooks(@Query() params?: GetAllBooksParamsDto) : Promise<GetBookDto[]>{
+        const booksToFind  = await this._booksService.getAllBooks(params);
         return booksToFind;   
     }
-    /**
+        /**
          * Route to get a specific book by its ID. the id is converted to int using the ParseIntPipe then passed to the bookService
          * @param bookId - The ID of the book to retrieve
          * if found returns The book with the specified ID
-  
-     */
+        */
     @Get('/:id')
-    getBookById(@Param('id', ParseIntPipe) bookId:number ) : Book  {
-        const bookToFind =  this._booksService.getBookById(bookId);
+    async getBookById(@Param('id', ParseIntPipe) bookId:number ) : Promise<GetBookDto>  {
+        const bookToFind = await this._booksService.getBookById(bookId);
         if (!bookToFind) {
             throw new NotFoundException(`Book with id ${bookId} not found.`);
         }
         return bookToFind;
     }
-
 }
