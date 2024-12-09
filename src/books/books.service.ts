@@ -1,6 +1,5 @@
 
 import { Injectable } from "@nestjs/common";
-import { booksData } from "../dummydata/books";
 import { Book } from "./interfaces/book.interface";
 import { GetAllBooksParamsDto } from "./dtos/get-all-books-params.dto";
 import { IBookService } from "./interfaces/books.service.interface";
@@ -13,14 +12,6 @@ import { mapMongoDbBookToGetBookDto } from './helpers/mongodb-book-converter'
 @Injectable()
 export class BooksService implements IBookService {
     constructor(@InjectModel(BookSchema.name) private bookModel: Model<BookSchema>){ }
-    books: Book[] = booksData;
-
-    createBook(createBookDto: any){
-        this.books.forEach(book =>{
-            const newBook = new this.bookModel(book)
-            return newBook.save();
-        }) 
-    }
 
      async getBooks(){
         const booksFound = await this.bookModel.find();
