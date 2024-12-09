@@ -3,12 +3,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BooksController } from './books.controller'; 
 import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
 import { Book } from './interfaces/book.interface';
+import { MongooseModule } from '@nestjs/mongoose';
+import { BookSchema, schema } from '../models/Books.Schema';
 
 describe('BooksController', () => {
   let booksController: BooksController;
+  let connectionString = "mongodb+srv://elyas575:Test123@cluster0.kdwmw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
+      imports: [
+        MongooseModule.forRoot(connectionString), 
+        MongooseModule.forFeature([{ name: BookSchema.name, schema: schema }]), 
+      ],
       controllers: [BooksController],
       providers: [BooksService],
     }).compile();
