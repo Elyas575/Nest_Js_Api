@@ -5,6 +5,7 @@ import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
 import { Book } from './interfaces/book.interface';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BookSchema, schema } from '../models/Books.Schema';
+import mongoose from 'mongoose';
 
 describe('BooksController', () => {
   let booksController: BooksController;
@@ -109,4 +110,3 @@ describe('BooksController', () => {
         })}
 )});
 });
-
