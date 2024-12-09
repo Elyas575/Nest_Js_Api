@@ -10,13 +10,12 @@ import { GetBookDto } from './dtos/get-book.dto';
 
 export class BooksController{
     constructor(private readonly _booksService:BooksService){}
-
         /**
          * Route to get all books
          * returns An array of all the books
          */
     @Get('/')
-         async getAllBooksFromDb(){
+    async getAllBooksFromDb(){
         return await this._booksService.getBooks();
     }
          /**
@@ -26,7 +25,7 @@ export class BooksController{
          * returns An array of books matching the search criteria
       */
     @Get('/search')
-   async getBooks(@Query() params?: GetAllBooksParamsDto) : Promise<GetBookDto[]>{
+    async getBooks(@Query() params?: GetAllBooksParamsDto) : Promise<GetBookDto[]>{
         const booksToFind  = await this._booksService.getAllBooks(params);
         return booksToFind;   
     }
@@ -36,12 +35,11 @@ export class BooksController{
          * if found returns The book with the specified ID
         */
     @Get('/:id')
-   async getBookById(@Param('id', ParseIntPipe) bookId:number ) : Promise<GetBookDto>  {
+    async getBookById(@Param('id', ParseIntPipe) bookId:number ) : Promise<GetBookDto>  {
         const bookToFind = await this._booksService.getBookById(bookId);
         if (!bookToFind) {
             throw new NotFoundException(`Book with id ${bookId} not found.`);
         }
         return bookToFind;
     }
-
 }
