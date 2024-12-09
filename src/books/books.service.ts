@@ -8,6 +8,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { BookSchema } from "src/models/Books.Schema";
 import { GetBookDto } from "./dtos/get-book.dto";
+import {mapMongoDbBookToGetBookDto} from './helpers/mongodb-book-converter'
 
 
 @Injectable()
@@ -73,32 +74,17 @@ export class BooksService implements IBookService {
                 filteredBooks = filteredBooks.filter(book => book.publication_date === params.date);
             }
         }
-
         // Map the books to the GetBookDto
         const filteredBooksToReturn = filteredBooks.map(book => {
-            const bookToReturn = new GetBookDto();
-            bookToReturn.id = book.id;
-            bookToReturn.title = book.title;
-            bookToReturn.author = book.author;
-            bookToReturn.price = book.price;
-            bookToReturn.category = book.category;
-            bookToReturn.publication_date = book.publication_date;
-            return bookToReturn;
+            // helper function that maps the object from mongo db to GetBookDto
+          return mapMongoDbBookToGetBookDto(book)
         });
 
         return filteredBooksToReturn;
     }
     async getBookById(bookId: number): Promise<GetBookDto> {
         const bookFound = await this.bookModel.findOne({ id: bookId });
-
-        const bookToReturn = new GetBookDto();
-        bookToReturn.id = bookFound.id;
-        bookToReturn.title = bookFound.title;
-        bookToReturn.author = bookFound.author;
-        bookToReturn.price = bookFound.price;
-        bookToReturn.category = bookFound.category;
-        bookToReturn.publication_date = bookFound.publication_date;
-
-        return bookToReturn;
+            // helper function that maps the object from mongo db to GetBookDto
+        return mapMongoDbBookToGetBookDto(bookFound)
     }
 }
