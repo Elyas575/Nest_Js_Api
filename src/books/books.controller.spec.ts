@@ -1,7 +1,7 @@
 import { BooksService } from './books.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BooksController } from './books.controller'; 
-import { GetAllBooksDto } from './interfaces/dtos/get-all-books.dto';
+import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
 import { Book } from './interfaces/books.interface';
 
 describe('BooksController', () => {
@@ -42,7 +42,7 @@ describe('BooksController', () => {
     });
 
     it('should filter books by price', async () => {
-      const params: GetAllBooksDto = { price: 40 };
+      const params: GetAllBooksParamsDto = { price: 40 };
       const booksFound = await booksController.getBooks(params);
       
       expect(booksFound.length).toBe(4);
@@ -52,7 +52,7 @@ describe('BooksController', () => {
     });
 
     it('should filter books by author', async () => {
-      const params: GetAllBooksDto = { author: 'Joshua Bloch' };
+      const params: GetAllBooksParamsDto = { author: 'Joshua Bloch' };
       const booksFound = await booksController.getBooks(params);
 
       expect(booksFound.length).toBe(1);
@@ -61,7 +61,7 @@ describe('BooksController', () => {
     });
 
     it('should filter books by category', async () => {
-      const params: GetAllBooksDto = { category: 'Java' };
+      const params: GetAllBooksParamsDto = { category: 'Java' };
       const booksFound = await booksController.getBooks(params);
 
       expect(booksFound.length).toBe(7);
@@ -71,7 +71,7 @@ describe('BooksController', () => {
     });
 
     it('should filter books by publication year partially', async () => {
-      const params: GetAllBooksDto = { date: '2011' };
+      const params: GetAllBooksParamsDto = { date: '2011' };
       const booksFound = await booksController.getBooks(params);
 
       expect(booksFound.length).toBe(2);
@@ -81,7 +81,7 @@ describe('BooksController', () => {
     });
 
     it('should filter books by publication year fully', async () => {
-        const params: GetAllBooksDto = { date: '2011-06-01' };
+        const params: GetAllBooksParamsDto = { date: '2011-06-01' };
         const booksFound = await booksController.getBooks(params);
         expect(booksFound.length).toBe(1);
         booksFound.forEach((book) => {
@@ -91,7 +91,7 @@ describe('BooksController', () => {
 
 
       it('should filter books by category and price', async () => {
-        const params: GetAllBooksDto = { date: '2011-06-01', category:'Java' };
+        const params: GetAllBooksParamsDto = { date: '2011-06-01', category:'Java' };
         const booksFound = await booksController.getBooks(params);
    
         expect(booksFound.length).toBe(1);
