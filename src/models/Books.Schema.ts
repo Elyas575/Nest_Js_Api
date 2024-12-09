@@ -21,4 +21,4 @@ export class Book {
     publication_date: string;
 }
 
-const bookSchema = SchemaFactory.createForClass(Book)
+export const bookSchema = SchemaFactory.createForClass(Book)
