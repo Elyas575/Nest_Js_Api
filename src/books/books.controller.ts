@@ -1,6 +1,6 @@
 import { BooksService } from './books.service';
 import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
-import { GetAllBooksDto } from './interfaces/dtos/get-all-books.dto';
+import { GetAllBooksParamsDto } from './dtos/get-all-books.dto';
 import { Book } from './interfaces/books.interface';
 
 @Controller('/books')
@@ -8,12 +8,12 @@ export class BooksController{
     constructor(private readonly _booksService:BooksService){}
 
     @Get()
-    getBooks(@Query() params?: GetAllBooksDto) : Book[]{
+    getBooks(@Query() params?: GetAllBooksParamsDto) : Book[]{
         return this._booksService.getAllBooks(params);
     }
 
     @Get('/search') 
-    searchBooks(@Query() params: GetAllBooksDto) : Book[]{
+    searchBooks(@Query() params?: GetAllBooksParamsDto) : Book[]{
         return this._booksService.getAllBooks(params);
     }
 

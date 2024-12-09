@@ -2,13 +2,13 @@
 import { Injectable, Query } from "@nestjs/common";
 import { booksData } from "../dummydata/books";
 import { Book } from "./interfaces/books.interface";
-import { GetAllBooksDto } from "./interfaces/dtos/get-all-books.dto";
+import { GetAllBooksParamsDto } from "./dtos/get-all-books.dto";
 
 @Injectable()
 export class BooksService {
 // to do: refactor the code later maybe use a switch case or a generic function
     books: Book[] = booksData;
-    getAllBooks(params?:GetAllBooksDto): Book[]{
+    getAllBooks(params?:GetAllBooksParamsDto): Book[]{
         let filteredBooks :Book[] = booksData;
 
         if(!params){

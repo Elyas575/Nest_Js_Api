@@ -1,4 +1,4 @@
-export interface GetAllBooksDto {
+export class GetAllBooksParamsDto {
     title?: string;         
     author?: string;        
     price?: number;        
