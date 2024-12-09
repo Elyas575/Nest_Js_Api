@@ -2,7 +2,7 @@ import { BooksService } from './books.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BooksController } from './books.controller'; 
 import { GetAllBooksParamsDto } from './dtos/get-all-books-params.dto';
-import { Book } from './interfaces/books.interface';
+import { Book } from './interfaces/book.interface';
 
 describe('BooksController', () => {
   let booksController: BooksController;
