@@ -8,8 +8,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { BookSchema } from "../models/Books.Schema";
 import { GetBookDto } from "./dtos/get-book.dto";
-import {mapMongoDbBookToGetBookDto} from './helpers/mongodb-book-converter'
-
+import { mapMongoDbBookToGetBookDto } from './helpers/mongodb-book-converter'
 
 @Injectable()
 export class BooksService implements IBookService {
@@ -23,9 +22,12 @@ export class BooksService implements IBookService {
         }) 
     }
 
-    getBooks(){
-        const booksFound = this.bookModel.find();
-        return mapMongoDbBookToGetBookDto(booksFound)
+     async getBooks(){
+        const booksFound = await this.bookModel.find();
+        const booksToReturn = booksFound.map(book=>{
+            return mapMongoDbBookToGetBookDto(book)
+        })
+         return booksToReturn
     }
       /**
          * Retrieves a list of books, optionally filtered by query parameters.

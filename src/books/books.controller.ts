@@ -16,11 +16,10 @@ export class BooksController{
     //         return this._booksService.createBook(CreateBookDto)
     // }
 
-    @Get()
-    getAllBooksFromDb(){
-        return this._booksService.getBooks();
+    @Get('/')
+         async getAllBooksFromDb(){
+        return await this._booksService.getBooks();
     }
-
       /**
          * Route to search for books based on query parameters.
          * The query parameters (title, author, price, category, publication date.) are validated then passed to the BooksService to fetch the books
@@ -28,8 +27,8 @@ export class BooksController{
          * returns An array of books matching the search criteria
       */
     @Get('/search')
-    getBooks(@Query() params?: GetAllBooksParamsDto) : Promise<GetBookDto[]>{
-        const booksToFind  = this._booksService.getAllBooks(params);
+   async getBooks(@Query() params?: GetAllBooksParamsDto) : Promise<GetBookDto[]>{
+        const booksToFind  = await this._booksService.getAllBooks(params);
         return booksToFind;   
     }
     /**
@@ -39,8 +38,8 @@ export class BooksController{
   
      */
     @Get('/:id')
-    getBookById(@Param('id', ParseIntPipe) bookId:number ) : Promise<GetBookDto>  {
-        const bookToFind =  this._booksService.getBookById(bookId);
+   async getBookById(@Param('id', ParseIntPipe) bookId:number ) : Promise<GetBookDto>  {
+        const bookToFind = await this._booksService.getBookById(bookId);
         if (!bookToFind) {
             throw new NotFoundException(`Book with id ${bookId} not found.`);
         }
