@@ -1,5 +1,5 @@
 
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Book } from "./interfaces/book.interface";
 import { GetAllBooksParamsDto } from "./dtos/get-all-books-params.dto";
 import { IBookService } from "./interfaces/books.service.interface";
@@ -14,13 +14,17 @@ export class BooksService implements IBookService {
     constructor(@InjectModel(BookSchema.name) private bookModel: Model<BookSchema>){ }
 
      async getBooks(){
-        const booksFound = await this.bookModel.find();
-        const booksToMap = booksFound.map(book=>{
-            return mapMongoDbBookToGetBookDto(book)
-        })
-
+        try{
+            const booksFound = await this.bookModel.find();
+            const booksToMap = booksFound.map(book=>{
+                return mapMongoDbBookToGetBookDto(book)
+            })
         const sortedBooksToReturn = booksToMap.sort((a, b) => a.id - b.id);
         return sortedBooksToReturn
+
+        }catch(error){
+            throw new NotFoundException(error.message);
+        }
     }
       /**
          * Retrieves a list of books, optionally filtered by query parameters.
@@ -75,8 +79,21 @@ export class BooksService implements IBookService {
         return sortedBooksById;
     }
     async getBookById(bookId: number): Promise<GetBookDto> {
-        const bookFound = await this.bookModel.findOne({ id: bookId });
-            // helper function that maps the object from mongo db to GetBookDto
-        return mapMongoDbBookToGetBookDto(bookFound)
+        try{
+            const bookFound = await this.bookModel.findOne({ id: bookId });
+
+            if(!bookFound){
+                throw new NotFoundException(`book with id ${bookId} is not found`);
+            }
+             // helper function that maps the object from mongo db to GetBookDto
+            return mapMongoDbBookToGetBookDto(bookFound)
+
+        }catch(error){
+            // handle general errors
+            throw new NotFoundException(error.message);
+        }
+
+      
+
     }
 }
