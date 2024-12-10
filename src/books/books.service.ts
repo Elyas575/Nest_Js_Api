@@ -15,10 +15,12 @@ export class BooksService implements IBookService {
 
      async getBooks(){
         const booksFound = await this.bookModel.find();
-        const booksToReturn = booksFound.map(book=>{
+        const booksToMap = booksFound.map(book=>{
             return mapMongoDbBookToGetBookDto(book)
         })
-         return booksToReturn
+
+        const sortedBooksToReturn = booksToMap.sort((a, b) => a.id - b.id);
+        return sortedBooksToReturn
     }
       /**
          * Retrieves a list of books, optionally filtered by query parameters.
@@ -64,12 +66,13 @@ export class BooksService implements IBookService {
             }
         }
         // Map the books to the GetBookDto
-        const filteredBooksToReturn = filteredBooks.map(book => {
+        const booksDto = filteredBooks.map(book => {
             // helper function that maps the object from mongo db to GetBookDto
           return mapMongoDbBookToGetBookDto(book)
         });
-
-        return filteredBooksToReturn;
+        // sort the books by id in ascending order
+        const sortedBooksById = booksDto.sort((a, b) => a.id - b.id);
+        return sortedBooksById;
     }
     async getBookById(bookId: number): Promise<GetBookDto> {
         const bookFound = await this.bookModel.findOne({ id: bookId });
